@@ -91,6 +91,7 @@ $ cmake -DCMAKE_SYSTEM_NAME=Linux \
 	-DLAPACK_LIBRARIES=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib/liblapack.so \
 	-DCMAKE_INSTALL_PREFIX=install \
 	..
+$ make
 $ make install
 ```
 
