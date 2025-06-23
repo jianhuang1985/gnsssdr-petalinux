@@ -1,2 +1,4 @@
 deps_petalinux/gnuradio-3.10.12.0-aarch64.pkg.tar.xz filter=lfs diff=lfs merge=lfs -text
 deps_petalinux/protobuf_v3.29.5-aarch64.pkg.tar.xz filter=lfs diff=lfs merge=lfs -text
+gnss-sdr/gnss-sdr-v0.0.20.tar.xz filter=lfs diff=lfs merge=lfs -text
+petalinux/petalinux-v2020.1-final-installer.run filter=lfs diff=lfs merge=lfs -text
