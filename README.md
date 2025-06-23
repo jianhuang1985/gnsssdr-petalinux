@@ -1,1 +1,1 @@
-# gnsssdr-petalinux
+# Cross-compile GNS-SDR under Petalinux2020.1
