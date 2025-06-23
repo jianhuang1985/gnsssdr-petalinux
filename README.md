@@ -15,10 +15,11 @@ Enter target directory for SDK (default: /opt/petalinux/2020.1):
 
 ### Install pip3 and python packages
  ```
+ $ cd pip
  $ sudo tar xvf pip3.tar.xz -C /
  $ sudo tar xvf site-packages.tar.xz -C /
 
- $ tar pip-24.0.tar.gz
+ $ tar xvf pip-24.0.tar.gz
  $ cd pip-24.0/
  $ sudo /opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/python3 setup.py install
 
@@ -50,3 +51,46 @@ Enter target directory for SDK (default: /opt/petalinux/2020.1):
  wheel              0.42.0
  zipp               3.15.0
  ```
+
+### Extract all dependencies into Petalinux
+
+```
+$ cd deps_petalinux/
+$ sudo find . -name "*.tar.xz" -print0 | xargs -0 -I {} sh -c 'echo "Extracting: {}"; sudo tar -xf "{}" -C /opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux'
+
+``` 
+
+### Extract protoc for x86
+When extract, you should replace all files by 'A'
+```
+$ cd deps_x86/
+$ sudo unzip protoc-29.5-linux-x86_64.zip -d /opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr
+Archive:  protoc-29.5-linux-x86_64.zip
+replace /opt/petalinux/2020.1/sysroots/x86_64-petalinux-linux/usr/bin/protoc? [y]es, [n]o, [A]ll, [N]one, [r]ename: A
+...
+
+```
+
+## build GNSS-SDR
+Before start the compile, the following command must be run.
+```
+$ source /opt/petalinux/2020.1/environment-setup-aarch64-xilinx-linux
+```
+
+extract GNSS-SDR source code and start to build
+```
+$ cd gnss-sdr/
+$ tar xvf gnss-sdr-v0.0.20.tar.xz
+% cd gnss-sdr-v0.0.20
+$ mkdir build
+$ cd build
+$ cmake -DCMAKE_SYSTEM_NAME=Linux \
+	-DCMAKE_SYSTEM_PROCESSOR=aarch64 \
+	-DENABLE_UNIT_TESTING=OFF \
+	-DBLAS_LIBRARIES=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib/libblas.so \
+	-DLAPACK_LIBRARIES=/opt/petalinux/2020.1/sysroots/aarch64-xilinx-linux/usr/lib/liblapack.so \
+	-DCMAKE_INSTALL_PREFIX=install \
+	..
+$ make install
+```
+
